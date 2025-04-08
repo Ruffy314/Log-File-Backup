@@ -5,7 +5,11 @@ setlocal enabledelayedexpansion
 Set "_SOURCE=C:\Users\Public\Documents\test_public\data"
 Set "_DESTINATION=C:\Users\Public\Documents\test_public\backup"
 
-:: Skriptdatei und Zeitstempeldatei
+:: Dateimuster für Filterung (z.B. nur bestimmte Dateiendungen)
+Set "_MATCHING=*Fielmann*.*"
+
+
+:: timestamp file based on this script's name
 Set "_TIMESTAMP_FILE=%~dpn0 - timestamp.txt"
 
 @REM echo step 1
@@ -27,6 +31,7 @@ For /F "tokens=*" %%A In ('PowerShell -Command "Get-Date -Format 'yyyy-MM-dd'"')
 
 @REM echo step 3
 
+echo Dateifilter: %_MATCHING%
 echo Kopiere Dateien, die seit %_LAST_RUN% geaendert wurden, nach %_DESTINATION%
 
 :: Create destination directory if it doesn't exist
@@ -35,7 +40,7 @@ if not exist "%_DESTINATION%" mkdir "%_DESTINATION%"
 @REM echo step 4
 
 :: Use a single-line PowerShell command with semicolons to separate statements
-PowerShell -Command "$lastRun = [datetime]::ParseExact('%_LAST_RUN%', 'yyyy-MM-dd', [System.Globalization.CultureInfo]::InvariantCulture); $files = Get-ChildItem -Path '%_SOURCE%' -File; foreach ($file in $files) { if ($file.LastWriteTime -gt $lastRun) { $datePrefix = $file.LastWriteTime.ToString('yyyy-MM-dd'); $targetPath = Join-Path '%_DESTINATION%' ($datePrefix + ' ' + $file.Name); Copy-Item -Path $file.FullName -Destination $targetPath -Force; Write-Host ('Kopiere: ' + $file.Name + ' -> ' + $datePrefix + ' ' + $file.Name); } }"
+PowerShell -Command "$lastRun = [datetime]::ParseExact('%_LAST_RUN%', 'yyyy-MM-dd', [System.Globalization.CultureInfo]::InvariantCulture); $files = Get-ChildItem -Path '%_SOURCE%' -Filter '%_MATCHING%' -File; foreach ($file in $files) { if ($file.LastWriteTime -gt $lastRun) { $datePrefix = $file.LastWriteTime.ToString('yyyy-MM-dd'); $targetPath = Join-Path '%_DESTINATION%' ($datePrefix + ' ' + $file.Name); Copy-Item -Path $file.FullName -Destination $targetPath -Force; Write-Host ('Kopiere: ' + $file.Name + ' -> ' + $datePrefix + ' ' + $file.Name); } }"
 
 :: POWERSHELL COMMAND EXPLANATION:
 :: 1. $lastRun = [datetime]::ParseExact('...')
@@ -43,12 +48,13 @@ PowerShell -Command "$lastRun = [datetime]::ParseExact('%_LAST_RUN%', 'yyyy-MM-d
 ::    - Uses the format 'yyyy-MM-dd' for parsing
 ::    - Ensures proper date comparisons regardless of locale settings
 ::
-:: 2. $files = Get-ChildItem -Path '...' -File
+:: 2. $files = Get-ChildItem -Path '...' -Filter '%_MATCHING%' -File
 ::    - Gets a list of all files (not directories) from the source path
+::    - Only includes files matching the pattern in _MATCHING variable
 ::    - Returns file objects with properties like LastWriteTime, Name, etc.
 ::
 :: 3. foreach ($file in $files) { ... }
-::    - Loops through each file found in the source directory
+::    - Loops through each matched file found in the source directory
 ::
 :: 4. if ($file.LastWriteTime -gt $lastRun) { ... }
 ::    - Checks if the file's last modification date is more recent than the last run date
