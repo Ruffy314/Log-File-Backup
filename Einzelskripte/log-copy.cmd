@@ -6,7 +6,7 @@ Set "_SOURCE=C:\Users\Public\Documents\test_public\data"
 Set "_DESTINATION=C:\Users\Public\Documents\test_public\backup"
 
 :: Dateimuster für Filterung (z.B. nur bestimmte Dateiendungen)
-Set "_MATCHING=*Fielmann*.*"
+Set "_MATCHING=*.*"
 
 
 :: timestamp file based on this script's name
