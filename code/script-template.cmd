@@ -1,19 +1,19 @@
 @echo off
 setlocal enabledelayedexpansion
 
-:::: ##################################
-:::: ####   Skript konfigurieren   ####
+:::: ###################################################
+:::: ####   Skript konfigurieren                    ####
 :::: <conifg>
 
 :: Quellverzeichnis und Zielverzeichnis
-Set "_SOURCE=C:\Users\Public\Documents\test_public\data"
-Set "_DESTINATION=C:\Users\Public\Documents\test_public\backup"
+Set "_SOURCE=C:\Pfad\Zu\Daten\Ordner"
+Set "_DESTINATION=C:\Pfad\Zum\Backup\Ordner"
 
 :: Dateimuster für Filterung (z.B. nur bestimmte Dateiendungen *.txt)
-Set "_MATCHING=*.pdf"
+Set "_MATCHING=*.log"
 
 :::: </config>
-:::: ##################################
+:::: ###################################################
 :::: <code>
 
 :: timestamp file based on this script's name
