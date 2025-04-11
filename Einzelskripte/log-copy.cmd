@@ -19,7 +19,7 @@ Set "_MATCHING=*.pdf"
 :: timestamp file based on this script's name
 Set "_TIMESTAMP_FILE=%~dpn0 - timestamp.txt"
 :: Path to PowerShell script (one directory up from this batch file)
-Set "_PS_SCRIPT=%~dp0..\FileCopier.ps1"
+Set "_PS_SCRIPT=%~dp0..\code\file-copy.ps1"
 
 :: Read or create timestamp of last run
 if exist "%_TIMESTAMP_FILE%" (
