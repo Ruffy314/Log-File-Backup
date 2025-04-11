@@ -1,25 +1,25 @@
 @echo off
 setlocal enabledelayedexpansion
 
-:::: ##################################
-:::: ####   Skript konfigurieren   ####
+:::: ###################################################
+:::: ####   Skript konfigurieren                    ####
 :::: <conifg>
 
 :: Quellverzeichnis und Zielverzeichnis
-Set "_SOURCE=C:\Users\Public\Documents\test_public\data"
-Set "_DESTINATION=C:\Users\Public\Documents\test_public\backup"
+Set "_SOURCE=C:\Pfad\Zu\Daten\Ordner"
+Set "_DESTINATION=C:\Pfad\Zum\Backup\Ordner"
 
 :: Dateimuster für Filterung (z.B. nur bestimmte Dateiendungen *.txt)
-Set "_MATCHING=*.pdf"
+Set "_MATCHING=*.log"
 
 :::: </config>
-:::: ##################################
+:::: ###################################################
 :::: <code>
 
 :: timestamp file based on this script's name
 Set "_TIMESTAMP_FILE=%~dpn0 - timestamp.txt"
 :: Path to PowerShell script (one directory up from this batch file)
-Set "_PS_SCRIPT=%~dp0..\FileCopier.ps1"
+Set "_PS_SCRIPT=%~dp0..\code\file-copy.ps1"
 
 :: Read or create timestamp of last run
 if exist "%_TIMESTAMP_FILE%" (
