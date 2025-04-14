@@ -37,7 +37,7 @@ For /F "tokens=*" %%A In ('PowerShell -Command "Get-Date -Format 'yyyy-MM-dd'"')
 if not exist "%_DESTINATION%" mkdir "%_DESTINATION%"
 
 :: Call the PowerShell script with the required parameters to copy the files
-PowerShell -ExecutionPolicy RemoteSigned -File "%_PS_SCRIPT%" "%_SOURCE%" "%_DESTINATION%" "%_MATCHING%" "%_LAST_RUN%"
+PowerShell -ExecutionPolicy ByPass -File "%_PS_SCRIPT%" "%_SOURCE%" "%_DESTINATION%" "%_MATCHING%" "%_LAST_RUN%"
 
 :: Update timestamp file with current date to keep track of most recent execution
 echo %_CURRENT_DATE% > "%_TIMESTAMP_FILE%"
