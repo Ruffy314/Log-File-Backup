@@ -41,3 +41,5 @@ powershell -ExecutionPolicy Bypass -File "%ps_temp%"
 del "%ps_temp%"
 
 endlocal
+
+pause
