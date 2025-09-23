@@ -80,7 +80,7 @@ foreach ($file in $files) {
             
             # Output information about the copied file with precise timestamp
             $fileTimeStamp = $file.LastWriteTime.ToString('yyyy-MM-dd HH:mm', [System.Globalization.CultureInfo]::InvariantCulture)
-            Write-Host "Kopiert: $($file.Name) (geändert: $fileTimeStamp) -> $datePrefix $($file.Name)"
+            Write-Host "Kopiert: $($file.Name) (geaendert: $fileTimeStamp) -> $datePrefix $($file.Name)"
             
             # Increment counter
             $copiedFiles++
