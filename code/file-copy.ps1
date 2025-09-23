@@ -9,7 +9,7 @@
 #   $args[0] - Source directory path
 #   $args[1] - Destination directory path
 #   $args[2] - File matching pattern (e.g., "*.txt")
-#   $args[3] - Last run date and time in format 'yyyy-MM-dd HH:mm'
+#   $args[3] - Last run date and time in format 'yyyy-MM-dd HH:mm' or 'yyyy-MM-dd'
 #
 
 # Get command line arguments
@@ -24,13 +24,24 @@ Write-Host "Destination: $destinationPath"
 Write-Host "Pattern: $filePattern"
 Write-Host "Last run date/time: $lastRunDateTime"
 
-# Convert the date/time string to a DateTime object for comparison
-# Using InvariantCulture ensures consistent parsing regardless of system locale
+# Normalize the date/time string and convert to DateTime object
+# Handle cases where only date is provided (with or without trailing space)
 try {
-    $lastRun = [datetime]::ParseExact($lastRunDateTime, 'yyyy-MM-dd HH:mm', [System.Globalization.CultureInfo]::InvariantCulture)
+    # Trim any trailing whitespace
+    $normalizedDateTime = $lastRunDateTime.Trim()
+    
+    # Check if the string matches only date format (yyyy-MM-dd)
+    if ($normalizedDateTime -match '^\d{4}-\d{2}-\d{2}$') {
+        # Only date provided, append default time 00:01
+        $normalizedDateTime = "$normalizedDateTime 00:01"
+        Write-Host "Date only provided, defaulting to 00:01"
+    }
+    
+    # Parse the normalized datetime string
+    $lastRun = [datetime]::ParseExact($normalizedDateTime, 'yyyy-MM-dd HH:mm', [System.Globalization.CultureInfo]::InvariantCulture)
     Write-Host "Parsed last run time: $($lastRun.ToString('yyyy-MM-dd HH:mm'))"
 } catch {
-    Write-Host "Error parsing timestamp '$lastRunDateTime'. Expected format: yyyy-MM-dd HH:mm"
+    Write-Host "Error parsing timestamp '$lastRunDateTime'. Expected format: yyyy-MM-dd HH:mm or yyyy-MM-dd"
     Write-Host "Error details: $($_.Exception.Message)"
     exit 1
 }
