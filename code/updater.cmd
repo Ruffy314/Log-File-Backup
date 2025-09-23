@@ -7,7 +7,7 @@ Set "_TEMPLATE=%~dp0script-template.cmd"
 :: The directory with the scripts that need updating is one folder above
 Set "_SCRIPT_DIR=%~dp0..\Einzelskripte"
 
-echo Updating scripts in %_SCRIPT_DIR% with code from %_TEMPLATE%...
+echo Updating scripts in "%_SCRIPT_DIR%" with code from "%_TEMPLATE%"...
 echo.
 
 :: Create a temporary PowerShell script file
