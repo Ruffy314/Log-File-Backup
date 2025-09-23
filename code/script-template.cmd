@@ -27,7 +27,7 @@ if exist "%_TIMESTAMP_FILE%" (
 ) else (
     :: If timestamp file doesn't exist, set default to 2 weeks ago
     echo Timestamp Datei nicht gefunden, nutze standardwert 14 Tage
-    For /F "tokens=*" %%A In ('PowerShell -Command "Get-Date (Get-Date).AddDays(-14) -Format 'yyyy-MM-dd HH:mm'"') Do Set "_LAST_RUN=%%A %%B"
+    For /F "tokens=*" %%A In ('PowerShell -Command "Get-Date (Get-Date).AddDays(-14) -Format 'yyyy-MM-dd HH:mm'"') Do Set "_LAST_RUN=%%A"
 )
 
 :: Get current date and time for logging

@@ -77,9 +77,9 @@ foreach ($file in $files) {
             Write-Host "Error copying file '$($file.FullName) to $targetPath': $($_.Exception.Message)"
         }
     } else {
-        # Optional: Show skipped files for debugging
-        $fileTimeStamp = $file.LastWriteTime.ToString('yyyy-MM-dd HH:mm', [System.Globalization.CultureInfo]::InvariantCulture)
-        Write-Host "Übersprungen: $($file.Name) (geändert: $fileTimeStamp) - nicht neuer als $($lastRun.ToString('yyyy-MM-dd HH:mm'))"
+        # # Optional: Show skipped files for debugging
+        # $fileTimeStamp = $file.LastWriteTime.ToString('yyyy-MM-dd HH:mm', [System.Globalization.CultureInfo]::InvariantCulture)
+        # Write-Host "Übersprungen: $($file.Name) (geändert: $fileTimeStamp) - nicht neuer als $($lastRun.ToString('yyyy-MM-dd HH:mm'))"
     }
 }
 
